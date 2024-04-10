@@ -28,9 +28,9 @@ class _ClockState extends State<Clock> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          title: Text("Clock"),
         ),
         body: Center(
           child: Stack(
@@ -42,38 +42,65 @@ class _ClockState extends State<Clock> {
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      height: 200,
-                      width: 200,
+                      height: 260,
+                      width: 260,
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image: AssetImage("assets/image/dc.jpg"))
+                        shape: BoxShape.circle,
+                        color: Colors.black,
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "${time.hour}:${time.minute}:${time.second}",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
+                          const SizedBox(height: 20,),
+                          const Text("Loe Angeles",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 15
+                            ),),
+                          const Text("84°F",style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white
+                          ),),
+                          const Divider(
+                            indent: 40,
+                            endIndent: 40,
+                            thickness: 2,
+                            color: Colors.blue,
                           ),
-                          Text(
-                            "${time.day}/${time.month}/${time.year}",
+                          Text("${time.hour}:${time.minute}:${time.second}",
                             style: const TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 45,
+                                color: Colors.white
+                            ),),
+                          Text("date: ${time.day}/${time.month}/${time.year}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.blue
+                            ),
                           ),
+                          const Divider(
+                            indent: 40,
+                            endIndent: 40,
+                            thickness: 2,
+                            color: Colors.blue,
+                          ),
+                          const Text("Distance : 9.50km",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),
+                         const Text("Calories :2,956",
+                            style: TextStyle(
+                                color: Colors.white
+                            ),)
                         ],
                       ),
                     ),
                     Transform.scale(
-                      scale: 6,
+                      scale: 7.5,
                       child: CircularProgressIndicator(
                           value: time.second / 60,
-                          color: Colors.amber,
+                          color: Colors.blue,
                           strokeCap: StrokeCap.round,
+                          strokeWidth: 2,
                           backgroundColor: Colors.white12),
                     ),
                   ],
@@ -82,17 +109,23 @@ class _ClockState extends State<Clock> {
               //Analog Clock
               Visibility(
                 visible: isanalog,
-                child: Stack(
-                  children: List.generate(
-                    60,
-                    (index) => Transform.rotate(
-                      angle: ((pi * 2) * index) / 60,
-                      child: Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                        endIndent: index % 5 == 0
-                            ? MediaQuery.sizeOf(context).width * 0.90
-                            : MediaQuery.sizeOf(context).width * 0.95,
+                  child: Center(
+                      child: Image.asset("assets/image/poster2.png",height: 250,))),
+              Visibility(
+                visible: isanalog,
+                child: Center(
+                  child: Stack(
+                    children: List.generate(
+                      60,
+                      (index) => Transform.rotate(
+                        angle: ((pi * 2) * index) / 60,
+                        child: Divider(
+                          color: Colors.black,
+                          thickness: 3,
+                          endIndent: index%5==0
+                                     ?MediaQuery.sizeOf(context).width * 0.90
+                                     :MediaQuery.sizeOf(context).width * 0.95
+                        ),
                       ),
                     ),
                   ),
@@ -101,14 +134,16 @@ class _ClockState extends State<Clock> {
               //Second
               Visibility(
                 visible: isanalog,
-                child: Transform.rotate(
-                  angle: ((pi * 2) * time.second) / 60,
+                child: Center(
                   child: Transform.rotate(
-                    angle: pi / 2,
-                    child: Divider(
-                      color: Colors.red,
-                      thickness: 2,
-                      endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                    angle: ((pi * 2) * time.second) / 60,
+                    child: Transform.rotate(
+                      angle: pi / 2,
+                      child: Divider(
+                        color: Colors.red,
+                        thickness: 3.5,
+                        endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                      ),
                     ),
                   ),
                 ),
@@ -116,15 +151,17 @@ class _ClockState extends State<Clock> {
               //Minute
               Visibility(
                 visible: isanalog,
-                child: Transform.rotate(
-                  angle: ((pi * 2) * time.minute) / 60,
+                child: Center(
                   child: Transform.rotate(
-                    angle: pi / 2,
-                    child: Divider(
-                      color: Colors.amber,
-                      thickness: 2,
-                      indent: 50,
-                      endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                    angle: ((pi * 2) * time.minute) / 60,
+                    child: Transform.rotate(
+                      angle: pi / 2,
+                      child: Divider(
+                        color: Colors.amber,
+                        thickness: 3.5,
+                        indent: 50,
+                        endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                      ),
                     ),
                   ),
                 ),
@@ -132,15 +169,17 @@ class _ClockState extends State<Clock> {
               //Hour
               Visibility(
                 visible: isanalog,
-                child: Transform.rotate(
-                  angle: ((pi * 2) * time.hour) / 12,
+                child: Center(
                   child: Transform.rotate(
-                    angle: pi / 2,
-                    child: Divider(
-                      color: Colors.green,
-                      thickness: 2,
-                      indent: 80,
-                      endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                    angle: ((pi * 2) * time.hour) / 12,
+                    child: Transform.rotate(
+                      angle: pi / 2,
+                      child: Divider(
+                        color: Colors.green,
+                        thickness: 3.5,
+                        indent: 80,
+                        endIndent: MediaQuery.sizeOf(context).width * 0.50,
+                      ),
                     ),
                   ),
                 ),
@@ -165,13 +204,6 @@ class _ClockState extends State<Clock> {
                                 Color(0xff3081C0),
                               ]),
                           shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            spreadRadius: 5,
-                            blurRadius: 3
-                          ),
-                        ]
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -292,7 +324,7 @@ class _ClockState extends State<Clock> {
                             });
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.watch_later_outlined))
+                          child: const Icon(Icons.watch_later_outlined))
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -314,7 +346,7 @@ class _ClockState extends State<Clock> {
                             });
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.watch_later_outlined))
+                          child: const Icon(Icons.watch_later_outlined))
                     ],
                   ),
                 ],
